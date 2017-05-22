@@ -5,10 +5,8 @@
   <artifactId>CWebServices</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>services Maven Webapp</name>
+  <name>CWebServices Maven Webapp</name>
   <url>http://maven.apache.org</url>
-  
-  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -18,6 +16,6 @@
     </dependency>
   </dependencies>
   <build>
-    <finalName>services</finalName>
+    <finalName>CWebServices</finalName>
   </build>
 </project>

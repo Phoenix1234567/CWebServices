@@ -1,4 +1,4 @@
-package netgloo.controllers;
+/*package netgloo.controllers;
 
 import netgloo.models.User;
 import netgloo.models.UserDao;
@@ -56,3 +56,4 @@ public class UserController {
   }
 
 } // class UserController
+*/

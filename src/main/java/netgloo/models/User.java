@@ -1,4 +1,4 @@
-package netgloo.models;
+/*package netgloo.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,3 +60,4 @@ public class User {
   }
   
 } // class User
+*/

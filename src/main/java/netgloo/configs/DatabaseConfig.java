@@ -12,13 +12,11 @@ import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import netgloo.models.Employee;
-
 @Configuration
 @EnableTransactionManagement
 public class DatabaseConfig {
 
-  /*@Value("${db.driver}")
+  @Value("${db.driver}")
   private String DB_DRIVER;
   
   @Value("${db.password}")
@@ -40,15 +38,15 @@ public class DatabaseConfig {
   private String HIBERNATE_HBM2DDL_AUTO;
 
   @Value("${entitymanager.packagesToScan}")
-  private String ENTITYMANAGER_PACKAGES_TO_SCAN;*/
+  private String ENTITYMANAGER_PACKAGES_TO_SCAN;
   
   @Bean
   public DataSource dataSource() {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-    dataSource.setUrl("jdbc:mysql://localhost:3306/employee_db");
-    dataSource.setUsername("root");
-    dataSource.setPassword("123456");
+    dataSource.setDriverClassName(DB_DRIVER);
+    dataSource.setUrl(DB_URL);
+    dataSource.setUsername(DB_USERNAME);
+    dataSource.setPassword(DB_PASSWORD);
     return dataSource;
   }
 
@@ -56,12 +54,11 @@ public class DatabaseConfig {
   public LocalSessionFactoryBean sessionFactory() {
     LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
     sessionFactoryBean.setDataSource(dataSource());
-    sessionFactoryBean.setPackagesToScan("netgloo");
+    sessionFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
     Properties hibernateProperties = new Properties();
-    hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-    hibernateProperties.put("hibernate.show_sql", "true");
-    hibernateProperties.put("hibernate.hbm2ddl.auto", "update");
-    hibernateProperties.put("hibernate.", "netgloo.");
+    hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
+    hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
+    hibernateProperties.put("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
     sessionFactoryBean.setHibernateProperties(hibernateProperties);
     
     return sessionFactoryBean;

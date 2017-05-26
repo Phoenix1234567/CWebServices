@@ -5,8 +5,6 @@ import java.util.List;
 import netgloo.models.Employee;
 
 public interface EmployeeDAO {
-	
-	
 
 	public void addEmployee(Employee employee);
 

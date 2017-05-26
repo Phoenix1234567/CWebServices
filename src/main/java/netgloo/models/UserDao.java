@@ -1,4 +1,4 @@
-package netgloo.models;
+/*package netgloo.models;
 
 import java.util.List;
 
@@ -52,3 +52,4 @@ public class UserDao {
   }
 
 } // class UserDao
+*/

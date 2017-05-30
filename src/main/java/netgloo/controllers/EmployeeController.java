@@ -3,6 +3,7 @@ package netgloo.controllers;
 import java.util.List;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,18 @@ public class EmployeeController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	private final Logger logger = LoggerFactory.getLogger(EmployeeController.class);
 
 	@RequestMapping(value = "get", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Employee>> get() throws EmployeeNotFoundException {
+		List<Employee> listEmployee = employeeService.getAllEmployees();
+		return new ResponseEntity<List<Employee>>(listEmployee, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "getById", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Employee>> getById() throws EmployeeNotFoundException {
 		List<Employee> listEmployee = employeeService.getAllEmployees();
 		return new ResponseEntity<List<Employee>>(listEmployee, HttpStatus.OK);
 	}
@@ -45,14 +54,15 @@ public class EmployeeController {
 	public ResponseEntity<List<Employee>> update(@RequestBody Employee employee,
 			@RequestHeader(value = "Authorization") String header) {
 		employeeService.updateEmployee(employee);
-		System.out.println(header);
+		logger.info(header);
 		List<Employee> listEmployee = employeeService.getAllEmployees();
 		return new ResponseEntity<List<Employee>>(listEmployee, HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "delete", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<List<Employee>> delete(@RequestParam(value = "employeeId", required = true) int employeeId) {
+	public ResponseEntity<List<Employee>> delete(@RequestParam(value = "employeeId", required = true) int employeeId)
+			throws EmployeeNotFoundException {
 		employeeService.deleteEmployee(employeeId);
 		List<Employee> listEmployee = employeeService.getAllEmployees();
 		return new ResponseEntity<List<Employee>>(listEmployee, HttpStatus.OK);

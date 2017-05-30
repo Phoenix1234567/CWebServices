@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import netgloo.dao.EmployeeDAO;
+import netgloo.exception.EmployeeNotFoundException;
 import netgloo.models.Employee;
 
 @Service
@@ -29,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public void deleteEmployee(Integer employeeId) {
+	public void deleteEmployee(Integer employeeId) throws EmployeeNotFoundException {
 		employeeDAO.deleteEmployee(employeeId);
 	}
 

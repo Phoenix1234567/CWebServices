@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import netgloo.connections.DatabaseConnection;
+import netgloo.exception.EmployeeNotFoundException;
 import netgloo.models.Employee;
 
 @Repository
@@ -15,34 +17,34 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-
+	private DatabaseConnection databaseConnection = new DatabaseConnection();
+	
 	public void addEmployee(Employee employee) {
 		sessionFactory.getCurrentSession().save(employee);
-
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Employee> getAllEmployees() {
 
-		return sessionFactory.getCurrentSession().createQuery("from Employee")
-				.list();
+		return databaseConnection.getConnection().createQuery("from Employee").list();
 	}
 
 	@Override
-	public void deleteEmployee(Integer employeeId) {
-		Employee employee = (Employee) sessionFactory.getCurrentSession().load(
-				Employee.class, employeeId);
-		if (null != employee) {
-			this.sessionFactory.getCurrentSession().delete(employee);
-		}
-
+	public void deleteEmployee(Integer employeeId){
+		try {
+			Employee employee = (Employee) sessionFactory.getCurrentSession().load(Employee.class, employeeId);
+			if (null != employee) {
+				this.sessionFactory.getCurrentSession().delete(employee);
+			}
+		} catch (Exception e) {
+			throw new EmployeeNotFoundException(e.getMessage());
+		} 
 	}
 
 	@Override
 	public Employee getEmployee(int empid) {
-		return (Employee) sessionFactory.getCurrentSession().get(
-				Employee.class, empid);
+		return (Employee) sessionFactory.getCurrentSession().get(Employee.class, empid);
 	}
 
 	@Override
@@ -50,13 +52,5 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		sessionFactory.getCurrentSession().update(employee);
 		return employee;
 	}
-
-	/*public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}*/
 
 }

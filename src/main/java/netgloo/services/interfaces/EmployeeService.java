@@ -1,4 +1,4 @@
-package netgloo.services;
+package netgloo.services.interfaces;
 
 import java.util.List;
 

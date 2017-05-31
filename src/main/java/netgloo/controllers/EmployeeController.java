@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import netgloo.exception.EmployeeNotFoundException;
 import netgloo.models.Employee;
-import netgloo.services.EmployeeService;
+import netgloo.services.interfaces.EmployeeService;
 
 @Controller
 @RequestMapping(value = "/")

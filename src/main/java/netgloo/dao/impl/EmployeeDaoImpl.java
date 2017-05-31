@@ -1,41 +1,41 @@
-package netgloo.dao;
+package netgloo.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import netgloo.connections.DatabaseConnection;
+import netgloo.dao.interfaces.EmployeeDao;
 import netgloo.exception.EmployeeNotFoundException;
 import netgloo.models.Employee;
 
 @Repository
 @Transactional
-public class EmployeeDAOImpl implements EmployeeDAO {
+public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	private DatabaseConnection databaseConnection = new DatabaseConnection();
 	
 	public void addEmployee(Employee employee) {
-		sessionFactory.getCurrentSession().save(employee);
+		getSession().save(employee);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<Employee> getAllEmployees() {
 
-		return databaseConnection.getConnection().createQuery("from Employee").list();
+		return getSession().createQuery("from Employee").list();
 	}
 
 	@Override
 	public void deleteEmployee(Integer employeeId){
 		try {
-			Employee employee = (Employee) sessionFactory.getCurrentSession().load(Employee.class, employeeId);
+			Employee employee = (Employee) getSession().load(Employee.class, employeeId);
 			if (null != employee) {
-				this.sessionFactory.getCurrentSession().delete(employee);
+				this.getSession().delete(employee);
 			}
 		} catch (Exception e) {
 			throw new EmployeeNotFoundException(e.getMessage());
@@ -44,13 +44,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public Employee getEmployee(int empid) {
-		return (Employee) sessionFactory.getCurrentSession().get(Employee.class, empid);
+		return (Employee) getSession().get(Employee.class, empid);
 	}
 
 	@Override
 	public Employee updateEmployee(Employee employee) {
-		sessionFactory.getCurrentSession().update(employee);
+		getSession().update(employee);
 		return employee;
 	}
-
+	
+	public Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
 }

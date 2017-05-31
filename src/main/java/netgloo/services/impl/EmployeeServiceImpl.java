@@ -1,19 +1,20 @@
-package netgloo.services;
+package netgloo.services.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import netgloo.dao.EmployeeDAO;
+import netgloo.dao.interfaces.EmployeeDao;
 import netgloo.exception.EmployeeNotFoundException;
 import netgloo.models.Employee;
+import netgloo.services.interfaces.EmployeeService;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
-	private EmployeeDAO employeeDAO;
+	private EmployeeDao employeeDAO;
 	//private static List<Employee> employees;
 	
 	@Override
@@ -45,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		//return new Employee(1, "gaurav", "ggarg777@gmail.com", "Noida", "9876900270");
 	}
 
-	public void setEmployeeDAO(EmployeeDAO employeeDAO) {
+	public void setEmployeeDAO(EmployeeDao employeeDAO) {
 		this.employeeDAO = employeeDAO;
 	}
 

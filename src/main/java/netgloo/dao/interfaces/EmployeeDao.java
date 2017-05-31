@@ -1,10 +1,10 @@
-package netgloo.dao;
+package netgloo.dao.interfaces;
 
 import java.util.List;
 
 import netgloo.models.Employee;
 
-public interface EmployeeDAO {
+public interface EmployeeDao {
 
 	public void addEmployee(Employee employee);
 

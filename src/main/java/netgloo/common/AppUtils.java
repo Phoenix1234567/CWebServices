@@ -1,4 +1,4 @@
-package netgloo.utils;
+package netgloo.common;
 
 public class AppUtils {
 

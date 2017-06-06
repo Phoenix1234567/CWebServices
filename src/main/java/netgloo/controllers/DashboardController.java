@@ -1,15 +1,11 @@
 package netgloo.controllers;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,24 +27,27 @@ public class DashboardController {
 	@Autowired
 	public DashboardService dashboardService;
 
-	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	@RequestMapping(value = "/Dashboard", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<Dashboard> get() {
 		Dashboard response = dashboardService.get();
 		return new ResponseEntity<Dashboard>(response, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/DashboardImages", method = RequestMethod.GET)
-	public ResponseEntity<String> getImages() throws IOException {
-		/*File f = new File("D:/Personal/CWebServices/src/main/resources/dashboardImages/img1.png"); //image file path
-		BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_ARGB);
-	      
-        BufferedImage bufferedImage = ImageIO.read(f);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ImageIO.write( bufferedImage  , "jpg", byteArrayOutputStream);*/
-        
-		File file = new File("D:/Personal/CWebServices/src/main/resources/dashboardImages/img1.png");
-		String encodstring = dashboardService.encodeFileToBase64Binary(file);
-		return new ResponseEntity(encodstring, HttpStatus.OK);
+
+	@RequestMapping(value = "/{dashboardFolder}/{imgName}/", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImages(@PathVariable(value = "dashboardFolder") String dashboardFolder,
+			@PathVariable(value = "imgName") String imgName) throws IOException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_JPEG);
+		/*
+		 * File file = new File(
+		 * "D:/Personal/CWebServices/src/main/resources/dashboardImages/img1.png"
+		 * ); InputStream fileInputStream = new FileInputStream(file);
+		 */
+		InputStream inputStream = this.getClass().getResourceAsStream("/" + dashboardFolder + "/" + imgName);
+		BufferedImage bufferedImage = ImageIO.read(inputStream);
+		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
+		return new ResponseEntity<byte[]>(byteArrayOutputStream.toByteArray(), headers, HttpStatus.OK);
 	}
 }

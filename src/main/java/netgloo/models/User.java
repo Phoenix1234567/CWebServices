@@ -40,54 +40,20 @@ public class User {
 	@Size(max = 30)
 	private String emailId;
 
-	@Column(name = "flat_no")
-	@Size(max = 10)
-	private String flatNo;
-
-	@Column(name = "tower_no")
-	@Size(max = 10)
-	private String towerNo;
-
-	@Column(name = "society")
-	@Size(max = 10)
-	private String society;
-
-	@Column(name = "sector")
-	@Size(max = 10)
-	private String sector;
-
-	@Column(name = "block")
-	@Size(max = 5)
-	private String block;
-
-	@Column(name = "city")
+	@Column(name = "referral_code")
 	@Size(max = 15)
-	private String city;
+	private String referralCode;
 
-	@Column(name = "state")
+	@Column(name = "referred_code")
 	@Size(max = 15)
-	private String state;
-
-	@Column(name = "vehicle_no")
-	@Size(max = 10)
-	private String vehicleNo;
-
-	@Column(name = "vehicle_type")
-	@Size(max = 10)
-	private String vehicleType;
-
-	@Column(name = "vehicle_category")
-	@Size(max = 5)
-	private String vehicleCategory;
-
+	private String referredCode;
+	
 	@NotNull
 	@Column(name = "password")
 	@Size(max = 15)
 	private String password;
 
-	@Column(name = "is_active", nullable = false, columnDefinition = "tinyint default 1")
-	private byte isActive = 1;
-
+	
 	public User() {
 	}
 
@@ -131,86 +97,6 @@ public class User {
 		this.mobileNo = mobileNo;
 	}
 
-	public String getFlatNo() {
-		return flatNo;
-	}
-
-	public void setFlatNo(String flatNo) {
-		this.flatNo = flatNo;
-	}
-
-	public String getTowerNo() {
-		return towerNo;
-	}
-
-	public void setTowerNo(String towerNo) {
-		this.towerNo = towerNo;
-	}
-
-	public String getSociety() {
-		return society;
-	}
-
-	public void setSociety(String society) {
-		this.society = society;
-	}
-
-	public String getSector() {
-		return sector;
-	}
-
-	public void setSector(String sector) {
-		this.sector = sector;
-	}
-
-	public String getBlock() {
-		return block;
-	}
-
-	public void setBlock(String block) {
-		this.block = block;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getVehicleNo() {
-		return vehicleNo;
-	}
-
-	public void setVehicleNo(String vehicleNo) {
-		this.vehicleNo = vehicleNo;
-	}
-
-	public String getVehicleType() {
-		return vehicleType;
-	}
-
-	public void setVehicleType(String vehicleType) {
-		this.vehicleType = vehicleType;
-	}
-
-	public String getVehicleCategory() {
-		return vehicleCategory;
-	}
-
-	public void setVehicleCategory(String vehicleCategory) {
-		this.vehicleCategory = vehicleCategory;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -226,4 +112,22 @@ public class User {
 	public void setEmailId(String emailId) {
 		this.emailId = emailId;
 	}
+	
+
+	public String getReferralCode() {
+		return referralCode;
+	}
+
+	public void setReferralCode(String referralCode) {
+		this.referralCode = referralCode;
+	}
+
+	public String getReferredCode() {
+		return referredCode;
+	}
+
+	public void setReferredCode(String referredCode) {
+		this.referredCode = referredCode;
+	}
+
 }
